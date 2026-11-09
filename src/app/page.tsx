@@ -1,10 +1,10 @@
-import Experience from "@/components/Experience";
-import FocusAreas from "@/components/sections/FocusAreas";
-import Approach from "@/components/sections/Approach";
-import About from "@/components/sections/About";
-import Careers from "@/components/sections/Careers";
-import Contact from "@/components/sections/Contact";
+import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import Journey from "@/components/documentary/Journey";
+import Opening from "@/components/documentary/Opening";
+import CompetenceExplore from "@/components/documentary/CompetenceExplore";
+import ChapterIndicator from "@/components/documentary/ChapterIndicator";
+import { CompetenceStory, UpcomingChapters, Conclusion } from "@/components/documentary/Chapters";
 import { COMPANY } from "@/content/site";
 
 // Structured data for search engines. Built only from our own constants.
@@ -29,13 +29,17 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ORG_JSON_LD }} />
-      <Experience>
-        <FocusAreas />
-        <Approach />
-        <About />
-        <Careers />
-        <Contact />
-      </Experience>
+      <SiteNav home />
+      <ChapterIndicator />
+      <main id="main">
+        <Journey>
+          <Opening />
+          <CompetenceExplore />
+        </Journey>
+        <CompetenceStory />
+        <UpcomingChapters />
+        <Conclusion />
+      </main>
       <SiteFooter />
     </>
   );

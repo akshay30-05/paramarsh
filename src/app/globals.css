@@ -2,6 +2,14 @@
 
 /* Company colour system (provided by Paramarsh) */
 @theme {
+  /* Beyond the Surface palette (creative blueprint) */
+  --color-charcoal: #111a24;
+  --color-paper: #e9e8e2;
+  --color-sage: #a9b8b1;
+  --color-ochre: #b58a52;
+  --color-slate: #263d52;
+
+  /* Company colour system, kept until the mentor confirms how the two sets relate */
   --color-deep-navy: #13233a;
   --color-clarity-blue: #246bfe;
   --color-open-cyan: #56c8e8;
@@ -11,8 +19,8 @@
   --color-cloud: #f4f7fa;
   --color-caution-red: #b5473a;
 
-  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-body: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -22,9 +30,9 @@
 }
 
 html {
-  background: var(--color-deep-navy);
+  background: var(--color-charcoal);
   /* Fixed header never hides an anchored heading or a keyboard-focused control */
-  scroll-padding-top: 5.5rem;
+  scroll-padding-top: 0;
 }
 
 body {
@@ -61,18 +69,6 @@ button {
   color: var(--color-deep-navy);
 }
 
-/* Lenis smooth scroll */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
 /* Keyboard focus: visible on both the navy and the cloud state */
 :focus-visible {
   outline: 2px solid var(--fg, var(--color-clarity-blue));
@@ -83,7 +79,7 @@ html.lenis body {
 .bg-human-mint :focus-visible {
   outline-color: var(--color-clarity-blue);
 }
-.bg-deep-navy :focus-visible {
+.bg-charcoal :focus-visible, .bg-deep-navy :focus-visible {
   outline-color: var(--color-cloud);
 }
 
@@ -207,255 +203,6 @@ html.lenis body {
   border-color: var(--color-deep-navy);
 }
 
-/* ---------- Header ---------- */
-
-.site-header {
-  color: var(--fg, var(--color-cloud));
-  transition:
-    background-color 0.5s var(--ease-warm),
-    box-shadow 0.5s var(--ease-warm);
-}
-.site-header[data-scrolled="true"] {
-  background: color-mix(in srgb, var(--bg, var(--color-deep-navy)) 82%, transparent);
-  backdrop-filter: blur(14px) saturate(1.4);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--fg, #fff) 10%, transparent);
-}
-.site-header[data-open="true"] {
-  --dark: 1;
-  color: var(--color-cloud);
-  background: transparent;
-  backdrop-filter: none;
-  box-shadow: none;
-}
-
-.nav-link {
-  position: relative;
-  padding: 0.6rem 0.9rem;
-  font-size: 0.94rem;
-  font-weight: 500;
-  opacity: 0.85;
-  transition: opacity 0.3s;
-}
-.nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0.9rem;
-  right: 0.9rem;
-  bottom: 0.35rem;
-  height: 2px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s var(--ease-warm);
-}
-.nav-link:hover,
-.nav-link[aria-current="true"] {
-  opacity: 1;
-}
-.nav-link:hover::after,
-.nav-link[aria-current="true"]::after {
-  transform: scaleX(1);
-}
-
-/* Closing is quicker than opening (exit faster than enter) */
-.mobile-menu {
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.28s ease-in,
-    visibility 0s linear 0.28s;
-}
-.mobile-menu a[aria-current="true"] {
-  color: var(--color-open-cyan);
-}
-.mobile-menu[data-open="true"] {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.45s var(--ease-warm);
-}
-.mobile-menu li {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 0.5s var(--ease-warm),
-    transform 0.5s var(--ease-warm);
-}
-.mobile-menu[data-open="true"] li {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .scroll-cue svg {
-    animation: cue 2.4s var(--ease-warm) infinite;
-  }
-}
-@keyframes cue {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(5px);
-  }
-}
-
-/* ---------- Pillars (window 2) ---------- */
-
-/* A pillar's colour key: a small irregular shard, same colour as its 3D shard */
-.shard-key {
-  display: inline-block;
-  width: 0.9rem;
-  height: 0.9rem;
-  flex: none;
-  clip-path: polygon(8% 0, 100% 22%, 78% 100%, 0 68%);
-}
-
-.pillar {
-  position: absolute;
-  width: min(19rem, 26vw);
-}
-.pillar-0 { left: 6vw;  bottom: 12vh; }
-.pillar-1 { right: 6vw; top: 16vh; }
-.pillar-2 { right: 14vw; bottom: 12vh; }
-.pillar-3 { left: 30vw; bottom: 6vh; }
-
-/* Progress through the four pillars: orientation for the pinned sequence */
-.pillar-steps {
-  position: absolute;
-  right: 2.5vw;
-  top: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-  transform: translateY(-50%);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  font-variant-numeric: tabular-nums;
-}
-.pillar-steps li {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  opacity: 0.4;
-  transition: opacity 0.5s var(--ease-warm);
-}
-.pillar-steps li::after {
-  content: "";
-  width: 1.1rem;
-  height: 2px;
-  background: currentColor;
-  transform-origin: right;
-  transition:
-    transform 0.5s var(--ease-warm),
-    background-color 0.5s var(--ease-warm);
-}
-[data-step="0"] .pillar-steps li:nth-child(1),
-[data-step="1"] .pillar-steps li:nth-child(2),
-[data-step="2"] .pillar-steps li:nth-child(3),
-[data-step="3"] .pillar-steps li:nth-child(4),
-[data-step="all"] .pillar-steps li {
-  opacity: 1;
-}
-[data-step="0"] .pillar-steps li:nth-child(1)::after,
-[data-step="1"] .pillar-steps li:nth-child(2)::after,
-[data-step="2"] .pillar-steps li:nth-child(3)::after,
-[data-step="3"] .pillar-steps li:nth-child(4)::after {
-  transform: scaleX(2);
-  background: var(--color-clarity-blue);
-}
-
-@media (max-width: 767px) {
-  .pillar-steps { display: none; }
-  .pillar { width: calc(50vw - 9vw); }
-  .pillar-0 { left: 6vw;  right: auto; top: auto; bottom: 22vh; }
-  .pillar-1 { right: 6vw; left: auto;  top: auto; bottom: 22vh; }
-  .pillar-2 { left: 6vw;  right: auto; top: auto; bottom: 5vh; }
-  .pillar-3 { right: 6vw; left: auto;  top: auto; bottom: 5vh; }
-}
-
-/* ---------- Focus areas ---------- */
-
-.focus-card {
-  position: relative;
-  padding: 2rem 1.75rem 2.25rem;
-  background: color-mix(in srgb, var(--color-deep-navy) 4%, var(--color-cloud));
-  border: 1px solid color-mix(in srgb, var(--color-deep-navy) 10%, transparent);
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%);
-  transition:
-    transform 0.6s var(--ease-warm),
-    background-color 0.6s var(--ease-warm);
-}
-.focus-card:hover {
-  background: color-mix(in srgb, var(--color-human-mint) 45%, var(--color-cloud));
-}
-.focus-shard {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  width: 2.6rem;
-  height: 2.6rem;
-  clip-path: polygon(10% 0, 100% 18%, 80% 100%, 0 70%);
-  transition: transform 0.7s var(--ease-warm);
-}
-.focus-shard::after {
-  /* Thin navy edge so the pale mint shard never disappears */
-  content: "";
-  position: absolute;
-  inset: 0;
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--color-deep-navy) 22%, transparent);
-  clip-path: inherit;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .focus-card:hover {
-    transform: translateY(-6px);
-  }
-  .focus-card:hover .focus-shard {
-    transform: rotate(-14deg) scale(1.08);
-  }
-}
-
-/* ---------- Approach ---------- */
-
-.approach-step {
-  position: relative;
-  padding: 1.75rem;
-  background: color-mix(in srgb, var(--color-cloud) 62%, transparent);
-  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
-}
-
-/* ---------- Careers ---------- */
-
-.careers-card {
-  padding: 2.25rem 2rem;
-  background: color-mix(in srgb, var(--color-cloud) 7%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-cloud) 16%, transparent);
-  backdrop-filter: blur(6px);
-  clip-path: polygon(var(--cut) 0, 100% 0, 100% 100%, 0 100%, 0 var(--cut));
-}
-
-/* ---------- Decorative shards ---------- */
-
-@media (prefers-reduced-motion: no-preference) {
-  .shard-poly {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: drift 9s ease-in-out infinite;
-  }
-}
-@keyframes drift {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  50% {
-    transform: translate(0, -6px) rotate(2deg);
-  }
-}
-
 /* ---------- Contact form ---------- */
 
 .contact-icon {
@@ -554,23 +301,276 @@ html.lenis body {
   overflow: hidden;
 }
 
-/* ---------- Footer ---------- */
+/* ---------- Beyond the Surface ---------- */
 
-.footer-title {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
+.doc-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.25rem 6vw;
+  color: var(--color-paper);
+  background: color-mix(in srgb, var(--color-charcoal) 86%, transparent);
+  backdrop-filter: blur(10px);
+}
+.doc-nav a {
+  text-decoration: none;
+}
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+}
+.nav-text {
+  font-size: clamp(0.66rem, 2.4vw, 0.78rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  padding: 0.5rem 0;
+  white-space: nowrap;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+  transition: border-color 0.3s var(--ease-warm);
+}
+.nav-text:hover {
+  border-color: var(--color-ochre);
+}
+
+.chapter-indicator {
+  position: fixed;
+  right: 2.2vw;
+  top: 50%;
+  z-index: 40;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.6rem 0.4rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-charcoal) 78%, transparent);
+  backdrop-filter: blur(8px);
+}
+.chapter-indicator a {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  min-height: 1.75rem;
+  min-width: 1.75rem;
+  padding: 0 0.35rem;
+  color: var(--color-paper);
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.chapter-indicator .dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  flex: none;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  transition: background-color 0.3s var(--ease-warm), border-color 0.3s var(--ease-warm);
+}
+.chapter-indicator a[aria-current="true"] .dot {
+  background: var(--color-ochre);
+  border-color: var(--color-ochre);
+}
+.chapter-indicator .label {
+  display: none;
   opacity: 0.55;
 }
+.chapter-indicator a[aria-current="true"] .label,
+.chapter-indicator a:hover .label,
+.chapter-indicator a:focus-visible .label {
+  opacity: 1;
+}
+@media (min-width: 1100px) {
+  .chapter-indicator .label {
+    display: inline;
+  }
+}
+
+.opening-line {
+  font-family: var(--font-display);
+  font-size: clamp(2.3rem, 6.2vw, 5.6rem);
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+}
+.eyebrow-doc {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-ochre);
+}
+.reading {
+  max-width: 38rem;
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  line-height: 1.75;
+}
+
+/* Ochre on paper is 2.5:1, too faint for text. On light grounds labels use slate (9:1). */
+.bg-paper .eyebrow-doc {
+  color: var(--color-slate);
+}
+.bg-paper :focus-visible {
+  outline-color: var(--color-slate);
+}
+.bg-slate :focus-visible {
+  outline-color: var(--color-paper);
+}
+
+/* ---------- Journey (opening + Competence terrain) ---------- */
+
+/* A soft vignette keeps text legible over the scene; it never hides it. */
+.journey-shade {
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--color-charcoal) 62%, transparent) 0%, transparent 58%),
+    linear-gradient(0deg, color-mix(in srgb, var(--color-charcoal) 55%, transparent) 0%, transparent 35%);
+}
+
+/* Reduced motion: the camera cuts between views with a short fade instead of travelling. */
+.journey-stage.cut > * {
+  animation: cut-fade 0.6s ease-out;
+}
+@keyframes cut-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.explore-panel {
+  padding: clamp(1.1rem, 2.5vw, 1.75rem);
+  background: color-mix(in srgb, var(--color-charcoal) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-paper) 14%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 4px;
+}
+.explore-panel :focus-visible {
+  outline-color: var(--color-paper);
+}
+
+.layer-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--color-paper);
+  border: 1px solid color-mix(in srgb, var(--color-paper) 28%, transparent);
+  border-radius: 3px;
+  transition:
+    background-color 0.3s var(--ease-warm),
+    border-color 0.3s var(--ease-warm),
+    color 0.3s var(--ease-warm);
+}
+.layer-btn:hover {
+  border-color: var(--color-paper);
+}
+/* Small phones: sentence case and tighter spacing so the longest label fits. */
+@media (max-width: 479px) {
+  .layer-btn {
+    gap: 0.45rem;
+    padding: 0.5rem 0.55rem;
+    font-size: 0.86rem;
+    letter-spacing: 0.01em;
+    text-transform: none;
+  }
+}
+/* Selected state is shown by fill and text colour, not colour alone: the swatch also fills. */
+.layer-btn[aria-pressed="true"] {
+  background: var(--color-paper);
+  color: var(--color-charcoal);
+  border-color: var(--color-paper);
+}
+.layer-swatch {
+  width: 0.7rem;
+  height: 0.7rem;
+  flex: none;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+}
+.layer-btn[aria-pressed="true"] .layer-swatch {
+  background: currentColor;
+}
+
+/* ---------- Buttons and links (Beyond the Surface) ---------- */
+
+.btn-ink {
+  background: var(--color-charcoal);
+  color: var(--color-paper);
+}
+.btn-ink:hover {
+  background: var(--color-slate);
+}
+.btn-line {
+  border: 1.5px solid color-mix(in srgb, currentColor 45%, transparent);
+}
+.btn-line:hover {
+  border-color: currentColor;
+}
+
 .footer-link {
   display: inline-block;
-  padding-block: 0.2rem; /* ≥24px pointer target (WCAG 2.2) */
+  padding-block: 0.25rem; /* at least 24px pointer target (WCAG 2.2) */
   opacity: 0.85;
-  transition: opacity 0.3s;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition:
+    opacity 0.3s,
+    text-decoration-color 0.3s;
 }
 .footer-link:hover {
   opacity: 1;
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  text-decoration-color: var(--color-ochre);
+}
+
+/* ---------- Contact form, re-themed to the documentary palette ---------- */
+
+.form-panel {
+  background: color-mix(in srgb, var(--color-paper) 55%, white);
+  border-color: color-mix(in srgb, var(--color-charcoal) 12%, transparent);
+}
+.field label {
+  color: var(--color-charcoal);
+}
+.field input,
+.field select,
+.field textarea {
+  color: var(--color-charcoal);
+  background: color-mix(in srgb, var(--color-paper) 30%, white);
+  border-color: color-mix(in srgb, var(--color-charcoal) 22%, transparent);
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--color-slate);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-slate) 22%, transparent);
+}
+.form-panel .btn-primary {
+  background: var(--color-charcoal);
+  color: var(--color-paper);
+}
+.form-panel .btn-primary:hover {
+  background: var(--color-slate);
+}
+.form-panel .btn-ghost {
+  color: var(--color-charcoal);
+  border-color: color-mix(in srgb, var(--color-charcoal) 30%, transparent);
+}
+.error-summary {
+  background: color-mix(in srgb, var(--color-caution-red) 7%, var(--color-paper));
+  color: var(--color-charcoal);
 }

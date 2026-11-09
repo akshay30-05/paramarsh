@@ -1,59 +1,43 @@
 import Link from "next/link";
-import { COMPANY, FOOTER_LINE, NAV } from "@/content/site";
-import { BrandMark } from "@/components/SiteHeader";
+import { COMPANY, PAGES } from "@/content/site";
 
 export default function SiteFooter() {
-  const year = new Date().getFullYear();
   return (
-    <footer className="relative z-20 bg-deep-navy text-cloud">
-      <div className="mx-auto max-w-[84rem] px-[6vw] pb-10 pt-20">
-        <div className="grid gap-12 md:grid-cols-12">
-          <div className="md:col-span-5">
-            <a href="#top" aria-label={`${COMPANY.name}, back to top`} className="inline-block">
-              <BrandMark tone="light" />
-            </a>
-            <p className="mt-6 max-w-[34ch] leading-relaxed opacity-75">{FOOTER_LINE}</p>
-          </div>
-
-          <nav aria-label="Footer" className="md:col-span-3 md:col-start-7">
-            <p className="footer-title">Explore</p>
-            <ul className="mt-4 space-y-2.5">
-              {NAV.map((item) => (
-                <li key={item.href}>
-                  <a href={item.href} className="footer-link">
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <div className="md:col-span-3">
-            <p className="footer-title">Contact</p>
-            <p className="mt-4 opacity-80">{COMPANY.location}</p>
-            <a href={`mailto:${COMPANY.email}`} className="footer-link mt-2 inline-block">
-              {COMPANY.email}
-            </a>
-          </div>
-        </div>
-
-        <div className="mt-16 flex flex-col gap-4 border-t border-cloud/15 pt-6 text-sm opacity-70 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {year} {COMPANY.legalName}. All rights reserved.
+    <footer className="bg-charcoal text-paper">
+      <div className="mx-auto grid max-w-[84rem] gap-12 py-16 pl-[6vw] pr-[4.5rem] md:grid-cols-[1.2fr_1fr] lg:pr-[11rem]">
+        <div>
+          <p className="font-display text-3xl">{COMPANY.name}</p>
+          <p className="mt-2 text-sm opacity-75">{COMPANY.descriptor}</p>
+          <p className="mt-6 text-sm leading-relaxed opacity-75">
+            {COMPANY.legalName}
+            <br />
+            {COMPANY.location}
           </p>
-          <ul className="flex gap-6">
+          <a href={`mailto:${COMPANY.email}`} className="footer-link mt-3 text-sm">
+            {COMPANY.email}
+          </a>
+        </div>
+        <nav aria-label="Footer">
+          <ul className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
+            {PAGES.map((p) => (
+              <li key={p.href}>
+                <Link href={p.href} className="footer-link">
+                  {p.label}
+                </Link>
+              </li>
+            ))}
             <li>
               <Link href="/privacy" className="footer-link">
-                Privacy Policy
+                Privacy
               </Link>
             </li>
             <li>
               <Link href="/terms" className="footer-link">
-                Terms of Service
+                Terms
               </Link>
             </li>
           </ul>
-        </div>
+        </nav>
       </div>
     </footer>
   );

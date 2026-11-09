@@ -116,8 +116,8 @@ export default function ContactForm() {
   if (status.kind === "sent") {
     return (
       <div className="form-panel" role="status">
-        <CheckCircle2 size={36} className="text-clarity-blue" aria-hidden="true" />
-        <h3 className="mt-5 font-display text-2xl font-semibold text-deep-navy">Thank you.</h3>
+        <CheckCircle2 size={36} className="text-slate" aria-hidden="true" />
+        <h3 className="mt-5 font-display text-2xl font-semibold text-charcoal">Thank you.</h3>
         <p className="mt-2 leading-relaxed">Your message is with the team. We will reply by email.</p>
         <button
           type="button"
@@ -166,7 +166,7 @@ export default function ContactForm() {
           tabIndex={-1}
           aria-labelledby="contact-error-title"
         >
-          <p id="contact-error-title" className="font-display text-lg font-semibold text-deep-navy">
+          <p id="contact-error-title" className="font-display text-lg font-semibold text-charcoal">
             Please check {invalid.length} fields
           </p>
           <ul className="mt-2 space-y-1 text-sm">
@@ -234,7 +234,7 @@ export default function ContactForm() {
           <input
             {...fieldProps("consent")}
             type="checkbox"
-            className="mt-1 size-4 shrink-0 accent-clarity-blue"
+            className="mt-1 size-4 shrink-0 accent-slate"
           />
           <span>
             I agree that Paramarsh may use these details to reply to my message, as described in the{" "}
@@ -253,7 +253,7 @@ export default function ContactForm() {
         </p>
       )}
       {status.kind === "handoff" && (
-        <p className="mt-5 flex items-start gap-2 rounded-sm bg-human-mint/60 p-4 text-sm" role="status">
+        <p className="mt-5 flex items-start gap-2 rounded-sm bg-sage/40 p-4 text-sm" role="status">
           <Mail size={18} className="mt-0.5 shrink-0" aria-hidden="true" />
           <span>
             Your message is ready in your email app. If it did not open,{" "}

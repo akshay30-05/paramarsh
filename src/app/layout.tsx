@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/bricolage-grotesque";
-import "@fontsource-variable/hanken-grotesk";
+import "@fontsource/instrument-serif";
+import "@fontsource-variable/manrope";
 import "./globals.css";
-import { COMPANY, HERO } from "@/content/site";
+import { COMPANY, OPENING } from "@/content/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(COMPANY.url),
   title: {
-    default: `${COMPANY.name} | ${HERO.title}`,
+    default: `${COMPANY.name} | Beyond the Surface`,
     template: `%s | ${COMPANY.name}`,
   },
   description: `${COMPANY.legalName} advances sustainable systems through research, innovation and cross-sector collaboration.`,
@@ -15,20 +15,20 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: COMPANY.name,
-    title: `${COMPANY.name} | ${HERO.title}`,
-    description: HERO.subline,
+    title: `${COMPANY.name} | Beyond the Surface`,
+    description: OPENING.line1,
     url: "/",
     locale: "en_IN",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${COMPANY.name} | ${HERO.title}`,
-    description: HERO.subline,
+    title: `${COMPANY.name} | Beyond the Surface`,
+    description: OPENING.line1,
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#13233A",
+  themeColor: "#111A24",
   width: "device-width",
   initialScale: 1,
 };

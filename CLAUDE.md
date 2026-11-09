@@ -2,127 +2,165 @@
 
 Project brief and working notes. Read this first in every session.
 
+## Status: restart (Beyond the Surface)
+
+The earlier showcase build (four 3D shards, pinned pillars, single landing page) is **superseded**. The
+site is being rebuilt from scratch around the approved **Beyond the Surface** creative direction: an
+interactive documentary homepage plus a conventional corporate website. The old code stays in git history
+(commit `3905571`) for reference only. Do not extend it; rebuild section by section against the plan below.
+
+Source documents (in the Claude Project "paramarsh"):
+
+- `Paramarsh_Beyond_the_Surface_Creative_Blueprint.pdf`: creative direction, stack, roadmap G1 to G7.
+- `Paramarsh_Detailed_Pillar_User_Stories.docx`: chapter scripts, user stories, acceptance criteria.
+
+If the company gives new instructions, they override this file.
+
 ## Who and what
 
-- Akshay is a frontend web developer intern at Paramarsh and is building the company website landing page.
-- Current phase: a short **demo for a showcase** to the company. After it, the company will give instructions and real work starts.
-- Repo: https://github.com/akshay30-05/paramarsh (Akshay's own account; started empty).
-- Local folder: `~/Desktop/paramarsh` (linked to that repo).
+- Akshay is a frontend web developer intern at Paramarsh and is building the company website.
+- Repo: https://github.com/akshay30-05/paramarsh (Akshay's own account).
 - Mac: Apple silicon, Node 24.
 
 ## The company
 
 - Paramarsh Global Sustainable Development Pvt. Ltd., Uttar Pradesh (registered 2023, research and experimental development). Site: https://www.paramarsh.dev
 - Contact on the live site: Varanasi, Uttar Pradesh, `queries@paramarsh.dev`.
-- Live site today: tagline "Building a more responsible future"; "Advancing sustainable systems through research, innovation, and cross-sector collaboration"; four SDG focus areas (03 Good Health and Well-Being, 12 Responsible Consumption and Production, 04 Quality Education, 09 Industry, Innovation and Infrastructure); a "Strategic Approach" section (only "Research" was visible); careers ("Learn, Build and Evolve"); contact; footer with Privacy and Terms.
-- "Paramarsh Mall" (in Akshay's first message) was a **voice-to-text mix-up** for "Paramarsh may receive great heights". There is no Mall product. The page is for the company and the Mall is not mentioned anywhere.
+- Live site today: tagline "Building a more responsible future"; four SDG focus areas (03, 12, 04, 09); strategic approach (Research, Innovation, Scale); careers; contact; Privacy and Terms.
+- There is no "Paramarsh Mall" product. That was a voice-to-text mix-up. Never mention it.
 
-## Brief from the company
+## Creative direction (approved)
 
-1. **Hero: four pillars.** Competence, transparency, benevolence, consistency. The four pillars are what the website relies on, and they are the "trust equation" (no separate framework).
-2. **Geometry:** fragmented and asymmetric.
-3. **Scrolling:** "warm" = smooth and soft, with eased transitions (not a colour). Smooth scroll with eased motion everywhere.
-4. **Colours:** the company colour system below.
-5. **Stack:** Next.js, React as the core framework, React Three Fiber, Three.js.
-6. **Textures loading:** Drei.
-7. **Animations:** GSAP.
-8. **Interaction:** React Three Fiber.
-9. **Web performance:** 60 fps, model optimisation, texture baking, shader/material optimisation.
+- **Core statement:** visitors should not only see what Paramarsh does; they should understand how Paramarsh thinks.
+- **Direction:** interactive documentary. Cinematic photography and video, editorial typography, restrained environmental 3D, human-centred story.
+- **Intensity:** balanced. Immersive but easy to navigate; immersion must never block services, work, careers or contact.
+- **Key rule:** every animation must communicate something. 3D is an environment the visitor enters, not an object they look at.
+- **Audience:** clients, development partners and stakeholders.
+- **Journey:** Curiosity, Discovery, Understanding, Confidence, Connection.
+
+### Story structure: opening + four chapters + conclusion
+
+| # | Sequence | Line | Environment |
+|---|---|---|---|
+| 00 | Opening film, the question | "Progress is easy to promise. Making it meaningful is harder." Then: "What does it actually take to create meaningful development?" | Full-screen cinematic landscape, slow forward camera |
+| 01 | Competence | Before we act, we understand. | Explorable terrain with layers: geography, people, economics, environment |
+| 02 | Consistency | The standard should never change. | Long architectural corridor; light and weather change, structure holds; lifecycle milestones (brief, research, planning, implementation, evaluation, learning) |
+| 03 | Transparency | Nothing important should be hidden. | Translucent architecture; selectable layers: Methods, Sources, Decisions, Limitations |
+| 04 | Benevolence | Development is ultimately about people. | Documentary photography and video; individual, community and environment perspectives |
+| 05 | Conclusion, what progress leaves behind | "The work is never just about what we build. It is about how we build it, why we build it, and who it serves." | Quiet editorial close; routes to Our Work, Start a Conversation, Who We Are |
+
+Pillar promises: Competence, grounded in research and a multidisciplinary team. Consistency, the same
+standard on the first project and the fiftieth. Transparency, methods, sources and limits stay visible.
+Benevolence, every idea is judged by who it helps, not only who it pays. Full scripts, user stories and
+acceptance criteria are in the pillar user stories document.
+
+### Site architecture
+
+Home (the documentary), Who We Are, What We Do, How We Do It (the four pillars with evidence), Our Work,
+Careers, Contact. Next.js routes: `/`, `/who-we-are`, `/what-we-do`, `/how-we-do-it`, `/our-work`,
+`/careers`, `/contact`, plus `/privacy` and `/terms`.
 
 ## Decided stack
 
 | Area | Choice |
 |---|---|
-| Framework | **Next.js (App Router) + TypeScript** with React. The company PDF listed Vite; Next.js was chosen for search visibility and Vercel. Akshay is to confirm this with his mentor. |
-| Styling | Tailwind CSS (v4; theme tokens in `src/app/globals.css`) |
-| 3D | Three.js, React Three Fiber, Drei (client-only canvas) |
-| Animation | GSAP, ScrollTrigger |
-| Smooth scroll | Lenis, synced to GSAP's ticker |
-| UI transitions | Motion for React (in the company stack; not used yet) |
-| Others (from the company stack) | Zustand only if needed; Lucide React icons; GLB/glTF models; Blender and Spline for 3D assets; Git + GitHub; Vercel |
-| Fonts | Self-hosted via `@fontsource-variable`: Bricolage Grotesque (display), Hanken Grotesk (body) |
-| Performance | Lazy loading, code splitting, WebP/AVIF images, compressed 3D models (Draco/Meshopt, KTX2), capped pixel ratio, static fallback for low-end devices |
-| Accessibility | Reduced-motion support, keyboard navigation, visible focus |
+| Framework | **Next.js (App Router) + TypeScript** with React. The blueprint suggests Vite; the team stays on Next.js for search visibility and Vercel. Revisit only if the mentor requires Vite. |
+| Styling | Tailwind CSS v4; tokens in `src/app/globals.css` |
+| 3D | Three.js, React Three Fiber, Drei. Scenes load with `dynamic(..., { ssr: false })`; every scene and scroll component is a client component |
+| Scroll and animation | GSAP + ScrollTrigger; Lenis only if it stays accessible and reliable |
+| Assets | Blender for environments, GLB (Draco/Meshopt, KTX2), FFmpeg for responsive video encodes |
+| Fonts | Instrument Serif (display) and Manrope (body), via `next/font` |
+| Hosting | Vercel |
 
-Full company stack: `docs/Informatie_Tech_Stack.pdf`. Same content in `docs/Paramarsh_Tech_Stack_and_Plan.xlsx`.
+Rendering strategy: real-time 3D for terrain, interactive layers and camera movement; pre-rendered video
+for complex cinematic transitions and footage; native HTML for all text, navigation, buttons and forms.
+Use the cheapest medium that achieves the effect.
 
-## Colour system (company-provided)
+Vite to Next.js translation: app router instead of `routes.tsx`; `next/font`; `"use client"` on scene and
+scroll components.
 
-Image: `docs/colour-system.png`.
+## Colour palette (blueprint, suggested)
 
-| Token | HEX | Role | Intent |
-|---|---|---|---|
-| Deep Navy | `#13233A` | Primary brand / headings | Competence, stability, seriousness |
-| Clarity Blue | `#246BFE` | Primary action / links | Orientation, focus, forward movement |
-| Open Cyan | `#56C8E8` | Diagram / secondary accent | Openness and explanation |
-| Human Mint | `#CDEFE5` | Supportive backgrounds | Care, calm and psychological safety |
-| Insight Yellow | `#F5C451` | Selective highlight | Attention and discovery, without alarm |
-| Ink | `#172033` | Body copy | Softer than black; high readability |
-| Cloud | `#F4F7FA` | Panels / page background | Separation without visual noise |
-| Caution Red | `#B5473A` | Errors / risk only | Clear warning; never decorative |
+| Token | HEX | Role |
+|---|---|---|
+| Midnight charcoal | `#111A24` | Cinematic openings, deep sections |
+| Warm editorial white | `#E9E8E2` | Main reading environments |
+| Muted sage | `#A9B8B1` | Environmental accents |
+| Earth ochre | `#B58A52` | Warm highlights, details |
+| Deep slate blue | `#263D52` | Research and information |
 
-Rules: do not add colours without approval. Insight Yellow is used sparingly and Caution Red only for errors. Pillar shards use Clarity Blue (competence), Open Cyan (transparency), Human Mint (benevolence), Insight Yellow (consistency).
+The earlier company colour system (Deep Navy `#13233A`, Clarity Blue `#246BFE`, Open Cyan `#56C8E8`,
+Human Mint `#CDEFE5`, Insight Yellow `#F5C451`, Ink `#172033`, Cloud `#F4F7FA`, Caution Red `#B5473A`,
+see `docs/colour-system.png`) is **not removed**. The blueprint palette is the working default for the
+documentary; the mentor must confirm how the two relate. Do not add colours beyond these two sets without
+approval. Use Caution Red only for errors.
 
-## Planned page structure
+## Roadmap (G1 to G7)
 
-1. Navigation (minimal sticky bar: logo, Contact)
-2. **Hero:** headline, subline, one call to action; four asymmetric shards beside it
-3. **Trust forms:** scroll joins the shards into one form
-4. **The four pillars:** one scroll beat each, with promise and proof
-5. Focus areas (SDG 03, 04, 09, 12)
-6. Strategic approach
-7. About
-8. Careers
-9. Contact: a form that emails `queries@paramarsh.dev` (Next.js route plus an email service such as Resend; API key only in Vercel env settings; spam trap, rate limit, server-side validation, privacy consent). Needs company DNS access to send from the `paramarsh.dev` domain.
-10. Footer (Privacy, Terms)
+| Goal | Scope | Deliverable |
+|---|---|---|
+| G1 | Creative foundation and **visual prototype**: tokens, type, one polished sequence (opening landscape, typography, nav, scroll camera, one transition into an environment, one meaningful interaction, transition to editorial text) | Approved visual system and prototype |
+| G2 | Opening documentary: opening scene, video and typography, scroll orchestration, nav, chapter indicator | Working opening |
+| G3 | Competence and Consistency chapters | Two complete chapters |
+| G4 | Transparency and Benevolence chapters | Two complete chapters |
+| G5 | Orchestration: connect scenes, camera and scroll timelines, chapter navigation, conclusion and CTAs | Full homepage documentary |
+| G6 | Corporate website pages; connect pillars to evidence | Complete site |
+| G7 | Production readiness: responsive, optimisation, accessibility, cross-browser, SEO, analytics | Production site |
 
-## Site status (showcase build)
+**Current goal: G1.** Build order: tokens and fonts, static layout (opening, nav, chapter indicator),
+scroll orchestration, terrain scene with mobile fallback, layer interaction with accessibility paths,
+real-device performance check, demo.
 
-The full landing page lives in this folder (the demo zip was unpacked here and extended). Run with `npm install`, then `npm run dev`. Checked in a browser at 1440×900 and 375×812. Build, lint and unit tests pass. See `README.md` for structure.
+## Experience rules
 
-- Sections built: header (phone menu), hero, pinned trust pillars, focus areas, strategic approach (Research, Innovation, Scale, from the live site), who we are, careers, contact form, footer, placeholder Privacy and Terms pages.
-- All copy lives in `src/content/site.ts`. Live-site wording is used where it exists. Placeholder lines are marked `PLACEHOLDER`.
-- Contact: `POST /api/contact` validates input, rate-limits, and has a honeypot. It sends via Resend only if `RESEND_API_KEY` and `CONTACT_FROM_EMAIL` are set; otherwise the form opens the visitor's email app, addressed to queries@paramarsh.dev.
-- Assets: the company symbol was downloaded from paramarsh.dev into `public/brand/`, plus a generated light version, favicon, Apple icon and Open Graph card. The symbol's green is the company's logo colour and is not in the colour system. It appears only in the logo.
-- 3D: the shards are double-sided. They shrink on narrow and square-ish screens, and the canvas stops rendering once the content covers it.
+- Scroll drives camera and chapter progression and never hijacks basic browser behaviour.
+- Persistent chapter indicator, direct chapter jumps, and a clear skip-documentary option.
+- Audio and video are muted by default, with accessible controls and a no-audio path.
+- Every chapter must be understandable without interacting with the 3D scene.
+- All essential text lives in semantic HTML, never baked into video or 3D surfaces.
+- Reduced motion: replace camera travel with fades and static compositions.
+- Touch: tap alternatives for hover; simplified drag gestures.
 
-### Earlier two-window demo notes
+## Performance and accessibility targets
 
-- **Window 1:** navy hero; four shards drift beside the headline, with pointer parallax; one entrance animation.
-- **Window 2:** the page pins; background eases navy to cloud; shards join into one icosahedron; each pillar is read in turn while its shard lights up; at the end all four show together.
-- Reduced motion: no Lenis, no pinning, shards already joined.
-- Key files: `src/components/Experience.tsx` (layout, Lenis, ScrollTrigger, copy), `src/components/Scene.tsx` (3D), `src/lib/sceneState.ts` (shared scroll state), `src/app/globals.css` (tokens, pillar positions).
-- **All copy is demo copy.** The headline and subline come from the live site. The four pillar lines are placeholders, to be replaced with the company's wording.
-- Not tested: real-GPU frame rate on a laptop and a mid-range phone. Check before the showcase.
+- Lighthouse performance 90+ where practical, accessibility 95+, CLS under 0.1, LCP under 2.5 s.
+- Lazy-load scenes; dispose unused 3D assets; never run several heavy scenes at once.
+- Static or video fallback on low-power devices and when WebGL is unavailable.
+- Keyboard navigation, visible focus, contrast, captions or transcripts for spoken content.
+- Test on a real laptop GPU and a mid-range phone, not only the dev machine.
+
+## Content and authenticity (non-negotiable)
+
+- Never invent project results, community impact, research findings, client relationships or capabilities.
+- Hypothetical examples must be labelled illustrative. Where evidence is missing, use philosophical storytelling, not fictional case studies.
+- Real people and communities appear only with informed consent and permission.
+- Mark all placeholder copy and placeholder imagery clearly (`PLACEHOLDER`).
+
+Needed from Paramarsh: mission and positioning, real service descriptions, team profiles and photos,
+case studies, research methodology, quality and governance practices, reports and data sources,
+stakeholder engagement evidence, logos and brand guidelines, fieldwork footage and permissions.
 
 ## Open items
 
 - Company instructions after the showcase (these override this file).
-- Confirm Next.js over Vite with the mentor.
-- Strategic approach: the live site lists Research, Innovation and Scale. Deeper detail for each is still needed.
+- Mentor confirmation: Next.js over Vite, and the colour palette (blueprint set vs company colour system).
+- All real content listed above.
+- Footage: real fieldwork or approved imagery; placeholder landscape for the G1 prototype.
 - Privacy Policy and Terms of Service text.
-- Real pillar promises and proof points.
+- Contact form: recipients, DNS access for sending from `paramarsh.dev`, approval for an email service.
 - Whether the repo stays on Akshay's account or moves to a company GitHub organisation.
-- Contact form: recipients, DNS access for sending, mentor approval for an email service.
-- Analytics: undecided.
+- Analytics: undecided. The blueprint suggests comparing the documentary against a simpler homepage variant.
 
 ## Working agreements
 
 - **Plan before building.** Ask before large steps.
 - **Never push or commit without Akshay's explicit approval, every session.** Pushing needs the repo attached with push access, which Akshay approves each time.
-- Never invent claims about the company. Mark placeholder copy clearly.
-- Never commit secrets (API keys, tokens). Use environment variables.
-- The company brief and colour system come first. Installed design skills are advisory only.
-- Targets: 60 fps, small first load, text before 3D, accessible, reduced-motion safe.
-
-## Installed tooling (Akshay's Mac, global Claude Code skills)
-
-- `frontend-design` (Anthropic): `~/.claude/skills/frontend-design`
-- `ui-ux-pro-max` (installed with `npx ui-ux-pro-max-cli init --ai claude --global`)
-- Note: global `npm install -g` failed with a permissions error on this Mac. Use `npx`, or set an npm prefix in the home folder.
+- Never commit secrets. Use environment variables.
+- Installed design skills are advisory only.
+- Targets: small first load, text before 3D, accessible, reduced-motion safe.
 
 ## Assets in `docs/`
 
 - `Informatie_Tech_Stack.pdf`: company-provided technology stack
 - `colour-system.png`: company-provided colour system
-- `Paramarsh_Tech_Stack_and_Plan.xlsx`: stack, colours, plan implications, landing page plan, open questions
+- `Paramarsh_Tech_Stack_and_Plan.xlsx`: earlier stack and plan
